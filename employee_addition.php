@@ -647,24 +647,41 @@
             <div id="header">
                 <a href="index.html" class="logo"><img src="img/logo.gif" width="150" height="75" alt=""/></a>
 
-                
+
             </div>
             <div id="middle">
                 <div id="left-column">
 
-                    <a href="#" class="link">Login</a>
-          
+                    <a href="manager_dashboard.php" class="link">Employees</a>
+                    <a href="#" class="link">Jobs</a>
+                    <a href="#" class="link">Sheduled Jobs</a>
+                    <a href="designstion.php" class="link">Designations</a>
+                    <a href="#" class="link">Send Alerts</a>
+                    <a href="index.php" class="link">Logout</a>
+
                 </div>
                 <div id="center-column">
 
+                    <div class="top-bar">
+                        <a href="manager_dashboard.php" class="button">Cancel</a>
+                        <h1>Employee Manipulation</h1>
 
+                    </div><br/>
+                    <div class="select-bar">
+                        <!--                        <label>
+                                                    <input type="text" name="textfield"/>
+                                                </label>
+                                                <label>
+                                                    <input type="submit" name="Submit" value="Search"/>
+                                                </label>-->
+                    </div>
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
                         <form action="log_action.php" method="POST">
                             <table class="listing form" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <th class="full" colspan="2">Authentication</th>
+                                    <th class="full" colspan="2">Add Employee Details</th>
                                 </tr>
                                 <tr>
 

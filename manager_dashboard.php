@@ -647,44 +647,80 @@
             <div id="header">
                 <a href="index.html" class="logo"><img src="img/logo.gif" width="150" height="75" alt=""/></a>
 
-                
+
             </div>
             <div id="middle">
                 <div id="left-column">
 
-                    <a href="#" class="link">Login</a>
-          
+                    <a href="manager_dashboard.php" class="link">Employees</a>
+                    <a href="#" class="link">Jobs</a>
+                    <a href="#" class="link">Sheduled Jobs</a>
+                    <a href="designstion.php" class="link">Designations</a>
+                    <a href="#" class="link">Send Alerts</a>
+                    <a href="index.php" class="link">Logout</a>
                 </div>
                 <div id="center-column">
+                    <div class="top-bar">
+                        <a href="employee_addition.php" class="button">+</a>
+                        <h1>Employee Manipulation</h1>
 
-
-                    <div class="table">
-                        <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
-                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="log_action.php" method="POST">
-                            <table class="listing form" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <th class="full" colspan="2">Authentication</th>
-                                </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"></td>
-                                    <td class="first">
-                                        <input type="submit" value="Submit"/></td>
-
-                                </tr>
-                            </table>
-                        </form>
-                        <p>&nbsp;</p>
+                    </div><br/>
+                    <div class="select-bar">
+                        <!--                        <label>
+                                                    <input type="text" name="textfield"/>
+                                                </label>
+                                                <label>
+                                                    <input type="submit" name="Submit" value="Search"/>
+                                                </label>-->
                     </div>
+                    <div class="table">
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT * FROM `employee` WHERE `role`!='manager'";
+
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
+                                <th class="first" width="177">EName</th>
+                                <th>EID</th>
+
+
+
+                                <th>Attendance</th>
+                                <th>Salary</th>
+
+                                <th></th>
+                                <th class="last"></th>
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr class="bg">
+                                <td class="first style2"><a href="employee_view.php?id=' . $row['id'] . '">' . $row['name'] . '</a></td>
+                                <td class="first style2">' . $row['id'] . '</td>
+                                <td><img src="img/login-icon.gif" width="16" height="16" alt="login"/></td>
+                                <td><img src="img/login-icon.gif" width="16" height="16" alt="login"/></td>
+                                <td><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></td>
+                                <td><img src="img/hr.gif" width="16" height="16" alt=""/></td>
+                            </tr>';
+                            }
+                        }
+                        ?>
+
+
+
+
+                        </table>
+
+                    </div>
+
                 </div>
 
             </div>
