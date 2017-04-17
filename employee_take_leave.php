@@ -1,3 +1,8 @@
+<?php
+session_start();
+$months = array("Jan", "Feb", "Mar", "Apr", "May");
+$years = array("2017", "2018");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
@@ -652,36 +657,25 @@
             <div id="middle">
                 <div id="left-column">
 
-                    <a href="manager_dashboard.php" class="link">Employees</a>
-                    <a href="#" class="link">Jobs</a>
-                    <a href="#" class="link">Sheduled Jobs</a>
-                    <a href="designstion.php" class="link">Designations</a>
-                    <a href="#" class="link">Send Alerts</a>
+                    <a href="employee_dashboard.php" class="link">Attendance</a>
+                    <a href="employee_leaves.php" class="link">Leaves</a>
+                    <a href="#" class="link">Alerts</a>
                     <a href="index.php" class="link">Logout</a>
-
                 </div>
                 <div id="center-column">
-
                     <div class="top-bar">
-                        <a href="manager_dashboard.php" class="button">Cancel</a>
-                        <h1>Employee Manipulation</h1>
+                        <a href="employee_take_leave.php" class="button">Mark</a>
+                        <h1>Leaves Section</h1>
 
                     </div><br/>
-                    <div class="select-bar">
-                        <!--                        <label>
-                                                    <input type="text" name="textfield"/>
-                                                </label>
-                                                <label>
-                                                    <input type="submit" name="Submit" value="Search"/>
-                                                </label>-->
-                    </div>
+                    
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
+                        <form action="employee_take_leave_action.php" method="POST">
                             <table class="listing form" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
+                                    <th class="full" colspan="2">Add Leave Details</th>
                                 </tr>
                                 <tr>
 
@@ -750,6 +744,7 @@
                         </form>
                         <p>&nbsp;</p>
                     </div>
+
                 </div>
 
             </div>

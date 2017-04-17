@@ -679,7 +679,7 @@
 
                         <?php
                         include_once 'config.php';
-                        $sql = "SELECT * FROM `employee` WHERE `role`!='manager'";
+                        $sql = "SELECT employee.id, `name`, `dob`, `mobile`, `email`,designation.description FROM `employee`,designation WHERE employee.did=designation.id AND `role`!='manager'";
 
                         $result = $con->query($sql);
                         $count = mysqli_num_rows($result);
@@ -690,25 +690,33 @@
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
                         <table class="listing" cellpadding="0" cellspacing="0">                                    
 <tr>
-                                <th class="first" width="177">EName</th>
-                                <th>EID</th>
+
+                                <th class="first">EID</th>
+                                <th  width="120">EName</th>
+                                <th class="first">EDesignation</th>
+<th>EMob. Number</th>
+<th>EEmail ID</th>
 
 
 
-                                <th>Attendance</th>
-                                <th>Salary</th>
+                              
+                                <th></th>
 
                                 <th></th>
                                 <th class="last"></th>
                             </tr>';
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo ' <tr class="bg">
-                                <td class="first style2"><a href="employee_view.php?id=' . $row['id'] . '">' . $row['name'] . '</a></td>
-                                <td class="first style2">' . $row['id'] . '</td>
-                                <td><img src="img/login-icon.gif" width="16" height="16" alt="login"/></td>
-                                <td><img src="img/login-icon.gif" width="16" height="16" alt="login"/></td>
-                                <td><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></td>
-                                <td><img src="img/hr.gif" width="16" height="16" alt=""/></td>
+                                    <td class="first style2">' . $row['id'] . '</td>
+                                <td class="first style2">' . $row['name'] . '</td>
+                                 <td class="first style2">' . $row['description'] . '</td>
+                                     <td class="first style2">' . $row['mobile'] . '</td>
+                                      <td class="first style2">' . $row['email'] . '</td>
+                                          
+                                
+                                <td><a href="employee_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                <td><a href="employee_edit.php?id='.$row['id'].'"><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></a></td>
+                                <td><a href="employee_delete_action.php?id='.$row['id'].'"><img src="img/hr.gif" width="16" height="16" alt=""/></a></td>
                             </tr>';
                             }
                         }

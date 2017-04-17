@@ -678,76 +678,87 @@
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
+                        <?php
+                        include_once 'config.php';
+                        $id = filter_input(INPUT_GET, 'id');
+                        $sql = "SELECT * FROM `employee` WHERE id=$id";
+
+                        $result = $con->query($sql);
+                        $row = mysqli_fetch_assoc($result);
+                        echo'
+                        <form action="employee_edit_action.php" method="POST">
                             <table class="listing form" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
+                                    <th class="full" colspan="2">Update Employee Details</th>
+                                </tr>
+                                <tr>
+
+                                    <td class="first" width="172"><strong>Employee ID</strong></td>
+                                    <td class="last"><input type="text" class="text" name="id" value="' . $row['id'] . '"  readonly="readonly" /></td>
+                                    
                                 </tr>
                                 <tr>
 
                                     <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
+                                    <td class="last"><input type="text" class="text" name="name" value="' . $row['name'] . '"/></td>
                                 </tr>
                                 <tr class="bg">
                                     <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
+                                    <td class="last"><textarea name="address" rows="4" cols="41">' . $row['address'] . '</textarea></td>
                                 </tr>
                                 <tr class="bg">
                                     <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
+                                    <td class="last"><input type="text" class="text" name="dob" value="' . $row['dob'] . '"/></td>
                                 </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
+                                
 
                                 <tr>
 
                                     <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
+                                    <td class="last"><input type="text" class="text" name="mobile" value="' . $row['mobile'] . '"/></td>
                                     
                                 </tr>
                                 <tr class="bg">
                                     <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
+                                    <td class="last"><input type="text" class="text" name="email" value="' . $row['email'] . '"/></td>
                                 </tr>
                                 <tr class="bg">
                                     <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
-
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
+                                    <td class="last">';
+                        echo ' <select name="designation">';
+                        $sql2 = "SELECT * FROM `designation` WHERE id=" . $row['did'];
+                        $result2 = $con->query($sql2);
+                        $row2 = mysqli_fetch_assoc($result2);
+                        echo ' 
+                                            <option value="' . $row2['id'] . '">' . $row2['description'] . '</option>
                                         ';
-                                            }
-                                            echo ' 
+                        $sql3 = "SELECT * FROM `designation`";
+
+                        $result3 = $con->query($sql3);
+
+                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                            if ($row3['id'] != $row2['id']) {
+                                echo ' 
+                                            <option value="' . $row3['id'] . '">' . $row3['description'] . '</option>
+                                        ';
+                            }
+                        }
+                        echo ' 
                                         </select>';
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"></td>
-                                    <td class="first">
-                                        <input type="submit" value="Submit"/></td>
 
-                                </tr>
+                        echo'       </td>
+                        </tr>
+                        <tr class="bg">
+                            <td class="first"></td>
+                            <td class="first">
+                                <input type="submit" value="Submit"/></td>
+
+                        </tr>
 
 
-                            </table>
-                        </form>
+                        </table>
+                        </form>';
+                        ?>
                         <p>&nbsp;</p>
                     </div>
                 </div>
