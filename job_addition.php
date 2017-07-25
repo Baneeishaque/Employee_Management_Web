@@ -663,8 +663,8 @@
                 <div id="center-column">
 
                     <div class="top-bar">
-                        <a href="manager_dashboard.php" class="button">Cancel</a>
-                        <h1>Employee Manipulation</h1>
+                        <a href="jobs.php" class="button">Cancel</a>
+                        <h1>Job Manipulation</h1>
 
                     </div><br/>
                     <div class="select-bar">
@@ -678,66 +678,22 @@
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
+                        <form action="job_addition_action.php" method="POST">
                             <table class="listing form" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
+                                    <th class="full" colspan="2">Add Job Details</th>
                                 </tr>
                                 <tr>
 
-                                    <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
-                                </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
-
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
+                                    <td class="first" width="172"><strong>Description</strong></td>
+                                    <td class="last"><textarea name="description" rows="4" cols="41"></textarea></td>
                                     
                                 </tr>
                                 <tr class="bg">
-                                    <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
+                                    <td class="first"><strong>Hours</strong></td>
+                                    <td class="last"><input type="text" class="text" name="hours"/></td>
                                 </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
-
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
-                                        ';
-                                            }
-                                            echo ' 
-                                        </select>';
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
+                                
                                 <tr class="bg">
                                     <td class="first"></td>
                                     <td class="first">

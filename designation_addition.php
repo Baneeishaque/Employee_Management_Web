@@ -653,17 +653,17 @@
                 <div id="left-column">
 
                     <a href="manager_dashboard.php" class="link">Employees</a>
-                    <a href="#" class="link">Jobs</a>
-                    <a href="#" class="link">Sheduled Jobs</a>
-                    <a href="designstion.php" class="link">Designations</a>
-                    <a href="#" class="link">Send Alerts</a>
+                    <a href="jobs.php" class="link">Jobs</a>
+                    <!-- <a href="#" class="link">Sheduled Jobs</a> -->
+                    <a href="designation.php" class="link">Designations</a>
+                    <a href="send_alerts.php" class="link">Send Alerts</a>
                     <a href="index.php" class="link">Logout</a>
 
                 </div>
                 <div id="center-column">
 
                     <div class="top-bar">
-                        <a href="designstion.php" class="button">Cancel</a>
+                        <a href="designation.php" class="button">Cancel</a>
                         <h1>Designation Manipulation</h1>
 
                     </div><br/>
@@ -694,7 +694,7 @@
                                     <td class="last"><input type="text" class="text" name="working-hours"/></td>
                                 </tr>
                                 <tr class="bg">
-                                    <td class="first"><strong>Allowed Leaves</strong></td>
+                                    <td class="first"><strong>Allowed Leaves (Hours)</strong></td>
                                     <td class="last"><input type="text" class="text" name="allowed-leaves"/></td>
                                 </tr>
                                 <tr class="bg">

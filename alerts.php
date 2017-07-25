@@ -1,3 +1,8 @@
+<?php
+session_start();
+$months = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+$years = array("2017", "2018");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
@@ -652,19 +657,15 @@
             <div id="middle">
                 <div id="left-column">
 
-                    <a href="manager_dashboard.php" class="link">Employees</a>
-                    <a href="jobs.php" class="link">Jobs</a>
-                    <!-- <a href="#" class="link">Sheduled Jobs</a> -->
-                    <a href="designation.php" class="link">Designations</a>
-                    <a href="send_alerts.php" class="link">Send Alerts</a>
+                    <a href="employee_dashboard.php" class="link">Attendance</a>
+                    <a href="employee_leaves.php" class="link">Leaves</a>
+                    <a href="alerts.php" class="link">Alerts</a>
                     <a href="index.php" class="link">Logout</a>
-
                 </div>
                 <div id="center-column">
-
                     <div class="top-bar">
-                        <a href="manager_dashboard.php" class="button">Cancel</a>
-                        <h1>Employee Manipulation</h1>
+                        
+                        <h1>Alerts</h1>
 
                     </div><br/>
                     <div class="select-bar">
@@ -675,81 +676,97 @@
                                                     <input type="submit" name="Submit" value="Search"/>
                                                 </label>-->
                     </div>
+                    <!-- <form name="search_form" action="employee_dashboard.php" method="POST">
+
+                        <div class="select-bar">
+                            <label>
+
+                                <select name="month">
+                    <?php
+                    /* echo '<option value="' . date('m') . '">' . date('M') . '</option>';
+                      for ($x = 0; $x < count($months); $x++) {
+
+                      if (date('m') == ($x + 1)) {
+                      continue;
+                      }
+                      echo '<option value="' . $x . '">' . $months[$x] . '</option>';
+                      } */
+                    ?>
+
+                                </select>
+                            </label>
+                            <label>
+                                <select name="year">
+                    <?php
+                    /* echo '<option value="' . date('Y') . '">' . date('Y') . '</option>';
+                      for ($x = 0; $x < count($years); $x++) {
+                      if (date('Y') == $years[$x]) {
+                      continue;
+                      }
+                      echo '<option value="' . $x . '">' . $years[$x] . '</option>';
+                      } */
+                    ?>
+
+
+                                </select>
+                            </label>
+                            <label>
+                                <input type="submit" name="search" value="Filter"/>
+                            </label>
+                        </div>
+                    </form> -->
                     <div class="table">
-                        <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        /* if (isset($_POST['month'])) {
+                          $sql = "SELECT * FROM `attendance` WHERE eid=$id AND month=" . filter_input(INPUT_POST, 'month') . " AND year=" . filter_input(INPUT_POST, 'year');
+                          } else {
+                          $sql = "SELECT * FROM `attendance` WHERE eid=$id AND month=DATE_FORMAT(NOW(),'%m') AND year=DATE_FORMAT(NOW(),'%Y')";
+                          } */
+                        $sql = "SELECT * FROM `alert`";
+                        //echo $sql;
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
-                            <table class="listing form" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
-                                </tr>
-                                <tr>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
+                                
+                                
+                                
 
-                                    <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
-                                </tr>
-                                <tr>
 
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
+                              
+                               
 
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
+   
+                                
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr >
                                     
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
-
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
-                                        ';
-                                            }
-                                            echo ' 
-                                        </select>';
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"></td>
-                                    <td class="first">
-                                        <input type="submit" value="Submit"/></td>
-
-                                </tr>
+                                <td class="first style2">' . $row['message'] . '</td>
+                                 
+                     
+                                
+                            </tr>';
+                            }
+                        }
+                        ?>
 
 
-                            </table>
-                        </form>
-                        <p>&nbsp;</p>
+
+
+                        </table>
+
                     </div>
+
                 </div>
 
             </div>

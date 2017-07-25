@@ -663,8 +663,8 @@
                 <div id="center-column">
 
                     <div class="top-bar">
-                        <a href="manager_dashboard.php" class="button">Cancel</a>
-                        <h1>Employee Manipulation</h1>
+                        <a href="jobs.php" class="button">Cancel</a>
+                        <h1>Job Assignation</h1>
 
                     </div><br/>
                     <div class="select-bar">
@@ -678,65 +678,165 @@
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
+
+                        <?php
+                        include_once 'config.php';
+                        $id = filter_input(INPUT_GET, 'id');
+                        $sql = "SELECT * FROM `job` WHERE id=$id";
+
+                        $result = $con->query($sql);
+                        $row = mysqli_fetch_assoc($result);
+                        $nsum = $row['hours'];
+                        echo'
+                        
                             <table class="listing form" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
+                                    <th class="full" colspan="2">Job Details</th>
                                 </tr>
                                 <tr>
 
-                                    <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
-                                </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
-
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
+                                    <td class="first" width="172"><strong>Job ID</strong></td>
+                                    <td class="last"><input type="text" class="text" name="id" value="' . $row['id'] . '"  readonly="readonly" /></td>
                                     
                                 </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
+                                <tr>
+
+                                    <td class="first" width="172"><strong>Description</strong></td>
+                                    <td class="last"><textarea name="address" rows="4" cols="41"  readonly="readonly" >' . $row['description'] . '</textarea></td>
                                 </tr>
                                 <tr class="bg">
-                                    <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
+                                    <td class="first"><strong>Needed Hours</strong></td>
+                                    <td class="last"><input type="text" class="text" name="name" value="' . $row['hours'] . '"  readonly="readonly" /></td>
+                                </tr>
+                                
+                                
+                        <tr><td></td><td></td></tr>
+                        </table>
+                        ';
+                        ?>
+                    </div>
+                    <div class="top-bar">
 
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
-                                        ';
-                                            }
-                                            echo ' 
-                                        </select>';
-                                        }
-                                        ?>
-                                    </td>
+                        <h2>Assigned Employees</h2>
+
+                    </div><br/>
+                    <div class="table">
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT employee.id, `name`, `dob`, `mobile`, `email`,designation.description,designation.`working-hours` FROM `employee`,designation WHERE employee.did=designation.id AND `role`!='manager' AND cjid=" . filter_input(INPUT_GET, 'id') . "";
+
+                        //echo $sql;
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
+<th class="first">EID</th>
+                                <th  width="120">EName</th>
+                                <th class="first">EDesignation : Hours</th>
+<th>EMob. Number</th>
+
+
+
+
+                              
+                                <th></th>
+
+                               
+                                <th class="last"></th>
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+
+                                echo ' <tr class="bg">
+                                    <td class="first style2">' . $row['id'] . '</td>
+                                <td class="first style2">' . $row['name'] . '</td>
+                                 <td class="first style2">' . $row['description'] . ' : ' . $row['working-hours'] . '</td>
+                                     <td class="first style2">' . $row['mobile'] . '</td>
+                                      
+                                          
+                                
+                                <td><a href="employee_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                <td><a href="job_assign_delete_action.php?id=' . $row['id'] . '&jid=' . filter_input(INPUT_GET, 'id') . '"><img src="img/hr.gif" width="16" height="16" alt=""/></a></td>
+                            </tr>';
+                            }
+                        }
+
+                        include_once 'config.php';
+                        $sql = "SELECT employee.id, `name`, `dob`, `mobile`, `email`,designation.description,designation.`working-hours`,SUM(designation.`working-hours`) AS sum FROM `employee`,designation WHERE employee.did=designation.id AND `role`!='manager' AND cjid=" . filter_input(INPUT_GET, 'id') . "";
+                        $sum = 0;
+                        //echo $sql;
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        $sum = 0;
+                        if ($count != 0) {
+                            $row = mysqli_fetch_assoc($result);
+                            $sum = $row['sum'];
+                        }
+                        ?>
+
+
+
+
+                        </table>
+
+                    </div>
+
+                    <div class="table">
+                        <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+                        <?php
+                        echo '<form action="job_assign_addition_action.php?id=' . filter_input(INPUT_GET, 'id') . '" method="POST">';
+                        echo'
+                        
+                            <table class="listing form" cellpadding="0" cellspacing="0">
+                               
+                                <tr>
+
+                                    <td class="first" width="172"><strong>Assigned Hours</strong></td>
+                                    <td class="last"><strong>' . $sum . '</strong></td></td>
+                                    
+                                </tr>
+                                <tr>
+
+                                    <td class="first" width="172"><strong>Unassigned Hours</strong></td>
+                                    <td class="last"><strong>' . ($nsum - $sum) . '</strong></td></td>
+                                    
+                                </tr>';
+                        if ($nsum == $sum) {
+                            echo '<tr>
+
+                                    <td class="first" width="172"><strong>Status</strong></td>
+                                    <td class="last"><strong>OK</strong></td></td>
+                                    
+                                </tr>';
+                        } elseif ($nsum > $sum) {
+                            echo '<tr>
+
+                                    <td class="first" width="172"><strong>Status</strong></td>
+                                    <td class="last"><strong>' . ($nsum - $sum) . ' Hours Shortage</strong></td></td>
+                                    
+                                </tr>';
+                        } else {
+                            echo '<tr>
+
+                                    <td class="first" width="172"><strong>Status</strong></td>
+                                    <td class="last"><strong>' . ($sum - $nsum) . ' Hours Wastage</strong></td></td>
+                                    
+                                </tr>';
+                        }
+
+
+                        echo '<tr class="bg">
+                                    <td class="first"><strong>Remarks</strong></td>
+                                    <td class="last"><input type="text" class="text" name="assign_remarks" /></td>
                                 </tr>
                                 <tr class="bg">
                                     <td class="first"></td>
@@ -744,12 +844,75 @@
                                         <input type="submit" value="Submit"/></td>
 
                                 </tr>
-
-
-                            </table>
+                                
+                        <tr><td></td><td></td></tr>
+                        </table>
+                        ';
+                        ?>
                         </form>
-                        <p>&nbsp;</p>
+
                     </div>
+
+                    <div class="top-bar">
+
+                        <h2>Available Employees</h2>
+
+                    </div><br/>
+                    <div class="table">
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT employee.id, `name`, `dob`, `mobile`, `email`,designation.description,designation.`working-hours` FROM `employee`,designation WHERE employee.did=designation.id AND `role`!='manager' AND cjid=0";
+
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
+
+                                <th class="first">EID</th>
+                                <th  width="120">EName</th>
+                                <th class="first">EDesignation : Hours</th>
+<th>EMob. Number</th>
+
+
+
+
+                              
+                                <th></th>
+
+                                
+                                <th class="last"></th>
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr class="bg">
+                                    <td class="first style2">' . $row['id'] . '</td>
+                                <td class="first style2">' . $row['name'] . '</td>
+                                 <td class="first style2">' . $row['description'] . ' : ' . $row['working-hours'] . '</td>
+                                     <td class="first style2">' . $row['mobile'] . '</td>
+                                      
+                                
+                                <td><a href="employee_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                    <td><a href="job_assign_action.php?id=' . $row['id'] . '&jid=' . filter_input(INPUT_GET, 'id') . '"><img src="img/add-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                
+                            </tr>';
+                            }
+                        }
+                        ?>
+
+
+
+
+                        </table>
+
+                    </div>
+
                 </div>
 
             </div>

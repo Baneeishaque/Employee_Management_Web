@@ -659,15 +659,23 @@ $years = array("2017", "2018");
 
                     <a href="employee_dashboard.php" class="link">Attendance</a>
                     <a href="employee_leaves.php" class="link">Leaves</a>
-                    <a href="#" class="link">Alerts</a>
+                    <a href="alerts.php" class="link">Alerts</a>
                     <a href="index.php" class="link">Logout</a>
                 </div>
                 <div id="center-column">
                     <div class="top-bar">
-                        <a href="employee_take_leave.php" class="button">Mark</a>
+                        <a href="employee_take_leave.php" class="button">Reset</a>
                         <h1>Leaves Section</h1>
 
                     </div><br/>
+                    <div class="select-bar">
+                        <!--                        <label>
+                                                    <input type="text" name="textfield"/>
+                                                </label>
+                                                <label>
+                                                    <input type="submit" name="Submit" value="Search"/>
+                                                </label>-->
+                    </div>
                     
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
@@ -679,59 +687,21 @@ $years = array("2017", "2018");
                                 </tr>
                                 <tr>
 
-                                    <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
+                                    <td class="first" width="172"><strong>Date : DD-MM-YYYY</strong></td>
+                                    <td class="last"><input type="text" class="text" name="date"/></td>
                                 </tr>
+                               
                                 <tr class="bg">
-                                    <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
+                                    <td class="first"><strong>Hours</strong></td>
+                                    <td class="last"><input type="text" class="text" name="hours"/></td>
                                 </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
+                                
+                                 <tr class="bg">
+                                    <td class="first"><strong>Reason</strong></td>
+                                    <td class="last"><textarea name="reason" rows="4" cols="41"></textarea></td>
                                 </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
-
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
-                                    
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
-
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
-                                        ';
-                                            }
-                                            echo ' 
-                                        </select>';
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
+                               
+                                
                                 <tr class="bg">
                                     <td class="first"></td>
                                     <td class="first">

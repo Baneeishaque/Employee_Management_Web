@@ -664,7 +664,7 @@
 
                     <div class="top-bar">
                         <a href="manager_dashboard.php" class="button">Cancel</a>
-                        <h1>Employee Manipulation</h1>
+                        <h1>Salary Details</h1>
 
                     </div><br/>
                     <div class="select-bar">
@@ -675,81 +675,84 @@
                                                     <input type="submit" name="Submit" value="Search"/>
                                                 </label>-->
                     </div>
+
+
+
+
                     <div class="table">
                         <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT designation.`allowed-leaves`,salary,SUM(hours) AS sum FROM `employee`,designation,`leave` WHERE employee.did=designation.id AND start_month=" . date('m') . " AND start_year=" . date('Y') . " AND employee.id=`leave`.eid AND `role`!='manager' AND employee.id=" . filter_input(INPUT_GET, 'id') . "";
+                        $sum = 0;
+                        // echo $sql;
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        $sum = 0;
+                        if ($count != 0) {
+                            $row = mysqli_fetch_assoc($result);
+                            $sum = $row['sum'];
+                        }
+
+                        echo'
+                        
                             <table class="listing form" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
-                                </tr>
+                               
                                 <tr>
 
-                                    <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
-                                </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
-
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
+                                    <td class="first" width="172"><strong>Base Salary</strong></td>
+                                    <td class="last"><strong>' . $row['salary'] . '</strong></td></td>
                                     
                                 </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
+                                <tr>
+
+                                    <td class="first" width="172"><strong>Allowed Leaves</strong></td>
+                                    <td class="last"><strong>' . $row['allowed-leaves'] . '</strong></td></td>
+                                    
                                 </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
+                                <tr>
 
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
-                                        ';
-                                            }
-                                            echo ' 
-                                        </select>';
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"></td>
-                                    <td class="first">
-                                        <input type="submit" value="Submit"/></td>
+                                    <td class="first" width="172"><strong>This Month Leaves</strong></td>
+                                    <td class="last"><strong>' . $sum . '</strong></td></td>
+                                    
+                                </tr>';
+                        if ($row['allowed-leaves'] == $sum) {
+                            echo '<tr>
 
-                                </tr>
+                                    <td class="first" width="172"><strong>Status</strong></td>
+                                    <td class="last"><strong>OK</strong></td></td>
+                                    
+                                </tr>';
+                        } elseif ($row['allowed-leaves'] > $sum) {
+                            echo '<tr>
+
+                                    <td class="first" width="172"><strong>Status</strong></td>
+                                    <td class="last"><strong>' . ($row['allowed-leaves'] - $sum) . ' Hours Gain</strong></td></td>
+                                    
+                                </tr>';
+                        } else {
+                            echo '<tr>
+
+                                    <td class="first" width="172"><strong>Status</strong></td>
+                                    <td class="last"><strong>' . ($sum - $row['allowed-leaves']) . ' Hours Loss</strong></td></td>
+                                    
+                                </tr>';
+                        }
 
 
-                            </table>
-                        </form>
-                        <p>&nbsp;</p>
+                        echo '
+                                
+                        <tr><td></td><td></td></tr>
+                        </table>
+                        ';
+                        ?>
+
+
                     </div>
+
+
+
                 </div>
 
             </div>

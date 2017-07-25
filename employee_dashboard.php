@@ -1,6 +1,6 @@
 <?php
 session_start();
-$months = array("Jan", "Feb", "Mar", "Apr", "May");
+$months = array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 $years = array("2017", "2018");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -659,7 +659,7 @@ $years = array("2017", "2018");
 
                     <a href="employee_dashboard.php" class="link">Attendance</a>
                     <a href="employee_leaves.php" class="link">Leaves</a>
-                    <a href="#" class="link">Alerts</a>
+                    <a href="alerts.php" class="link">Alerts</a>
                     <a href="index.php" class="link">Logout</a>
                 </div>
                 <div id="center-column">
@@ -668,36 +668,44 @@ $years = array("2017", "2018");
                         <h1>Attendance Manipulation</h1>
 
                     </div><br/>
-                    <form name="search_form" action="employee_dashboard.php" method="POST">
+                    <div class="select-bar">
+                        <!--                        <label>
+                                                    <input type="text" name="textfield"/>
+                                                </label>
+                                                <label>
+                                                    <input type="submit" name="Submit" value="Search"/>
+                                                </label>-->
+                    </div>
+                    <!-- <form name="search_form" action="employee_dashboard.php" method="POST">
 
                         <div class="select-bar">
                             <label>
 
                                 <select name="month">
-                                    <?php
-                                    echo '<option value="' . date('m') . '">' . date('M') . '</option>';
-                                    for ($x = 0; $x < count($months); $x++) {
+                    <?php
+                    /* echo '<option value="' . date('m') . '">' . date('M') . '</option>';
+                      for ($x = 0; $x < count($months); $x++) {
 
-                                        if (date('m') == ($x + 1)) {
-                                            continue;
-                                        }
-                                        echo '<option value="' . $x . '">' . $months[$x] . '</option>';
-                                    }
-                                    ?>
+                      if (date('m') == ($x + 1)) {
+                      continue;
+                      }
+                      echo '<option value="' . $x . '">' . $months[$x] . '</option>';
+                      } */
+                    ?>
 
                                 </select>
                             </label>
                             <label>
                                 <select name="year">
-                                    <?php
-                                    echo '<option value="' . date('Y') . '">' . date('Y') . '</option>';
-                                    for ($x = 0; $x < count($years); $x++) {
-                                        if (date('Y') == $years[$x]) {
-                                            continue;
-                                        }
-                                        echo '<option value="' . $x . '">' . $years[$x] . '</option>';
-                                    }
-                                    ?>
+                    <?php
+                    /* echo '<option value="' . date('Y') . '">' . date('Y') . '</option>';
+                      for ($x = 0; $x < count($years); $x++) {
+                      if (date('Y') == $years[$x]) {
+                      continue;
+                      }
+                      echo '<option value="' . $x . '">' . $years[$x] . '</option>';
+                      } */
+                    ?>
 
 
                                 </select>
@@ -706,54 +714,53 @@ $years = array("2017", "2018");
                                 <input type="submit" name="search" value="Filter"/>
                             </label>
                         </div>
-                    </form>
+                    </form> -->
                     <div class="table">
 
 
 
-<?php
-include_once 'config.php';
-$id = $_SESSION["user_id"];
-if (isset($_POST['month'])) {
-    $sql = "SELECT * FROM `attendance` WHERE eid=$id AND month=" . filter_input(INPUT_POST, 'month') . " AND year=" . filter_input(INPUT_POST, 'year');
-} else {
-    $sql = "SELECT * FROM `attendance` WHERE eid=$id AND month=DATE_FORMAT(NOW(),'%m') AND year=DATE_FORMAT(NOW(),'%Y')";
-}
+                        <?php
+                        include_once 'config.php';
+                        $id = $_SESSION["user_id"];
+                        /* if (isset($_POST['month'])) {
+                          $sql = "SELECT * FROM `attendance` WHERE eid=$id AND month=" . filter_input(INPUT_POST, 'month') . " AND year=" . filter_input(INPUT_POST, 'year');
+                          } else {
+                          $sql = "SELECT * FROM `attendance` WHERE eid=$id AND month=DATE_FORMAT(NOW(),'%m') AND year=DATE_FORMAT(NOW(),'%Y')";
+                          } */
+                        $sql = "SELECT * FROM `attendance` WHERE eid=$id ";
+                        //echo $sql;
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
 
-//                        echo $sql;
-$result = $con->query($sql);
-$count = mysqli_num_rows($result);
-if ($count != 0) {
-
-    echo '
+                            echo '
 <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
                         <table class="listing" cellpadding="0" cellspacing="0">                                    
 <tr>
 <th   class="first" width="120">Date</th>
-                                <th>Status</th>
+                                
                                 
                                 
 
 
                               
-                                <th></th>
+                               
 
    
-                                <th class="last"></th>
+                                <th class="last">Status</th>
                             </tr>';
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo ' <tr class="bg">
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr class="bg">
                                     <td class="first style2">' . $row['day'] . '-' . $row['month'] . '-' . $row['year'] . '</td>
                                 <td class="first style2">' . $row['status'] . '</td>
                                  
                      
-                                <td><a href="#"><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></a></td>
-                                <td><a href="#"><img src="img/hr.gif" width="16" height="16" alt=""/></a></td>
+                                
                             </tr>';
-    }
-}
-?>
+                            }
+                        }
+                        ?>
 
 
 

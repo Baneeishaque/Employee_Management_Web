@@ -653,10 +653,10 @@
                 <div id="left-column">
 
                     <a href="manager_dashboard.php" class="link">Employees</a>
-                    <a href="#" class="link">Jobs</a>
-                    <a href="#" class="link">Sheduled Jobs</a>
-                    <a href="designstion.php" class="link">Designations</a>
-                    <a href="#" class="link">Send Alerts</a>
+                    <a href="jobs.php" class="link">Jobs</a>
+                    <!-- <a href="#" class="link">Sheduled Jobs</a> -->
+                    <a href="designation.php" class="link">Designations</a>
+                    <a href="send_alerts.php" class="link">Send Alerts</a>
                     <a href="index.php" class="link">Logout</a>
                 </div>
                 <div id="center-column">
@@ -715,8 +715,8 @@
                                           
                                 
                                 <td><a href="employee_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
-                                <td><a href="employee_edit.php?id='.$row['id'].'"><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></a></td>
-                                <td><a href="employee_delete_action.php?id='.$row['id'].'"><img src="img/hr.gif" width="16" height="16" alt=""/></a></td>
+                                <td><a href="employee_edit.php?id=' . $row['id'] . '"><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></a></td>
+                                <td><a href="employee_delete_action.php?id=' . $row['id'] . '"><img src="img/hr.gif" width="16" height="16" alt=""/></a></td>
                             </tr>';
                             }
                         }

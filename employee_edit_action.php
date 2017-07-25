@@ -11,7 +11,7 @@ $designation = filter_input(INPUT_POST, 'designation');
 $sql = "UPDATE `employee` SET `name`='$name',`address`='$address',`dob`='$dob',`mobile`='$mobile',`email`='$email',`did`='$designation' WHERE id=$id";
 //echo $sql;
 if ($con->query($sql)) {
-    echo '<script>alert("Added Successfully...")</script>';
+    echo '<script>alert("Updated Successfully...")</script>';
     echo '<script>window.location="manager_dashboard.php"</script>';
 } else {
     echo '<script>alert("Error : '. mysqli_error($con).', Try Again...")</script>';

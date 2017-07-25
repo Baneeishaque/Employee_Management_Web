@@ -653,10 +653,10 @@
                 <div id="left-column">
 
                     <a href="manager_dashboard.php" class="link">Employees</a>
-                    <a href="#" class="link">Jobs</a>
-                    <a href="#" class="link">Sheduled Jobs</a>
+                    <a href="jobs.php" class="link">Jobs</a>
+                    <!-- <a href="#" class="link">Sheduled Jobs</a> -->
                     <a href="designation.php" class="link">Designations</a>
-                    <a href="#" class="link">Send Alerts</a>
+                    <a href="send_alerts.php" class="link">Send Alerts</a>
                     <a href="index.php" class="link">Logout</a>
                 </div>
                 <div id="center-column">
@@ -695,7 +695,7 @@
 
 
 
-                                <th>Allowed Leaves</th>
+                                <th>Allowed Leaves (Hours)</th>
                                 <th>Salary</th>
 
                                 <th></th>

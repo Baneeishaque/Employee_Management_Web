@@ -658,13 +658,11 @@
                     <a href="designation.php" class="link">Designations</a>
                     <a href="send_alerts.php" class="link">Send Alerts</a>
                     <a href="index.php" class="link">Logout</a>
-
                 </div>
                 <div id="center-column">
-
                     <div class="top-bar">
-                        <a href="manager_dashboard.php" class="button">Cancel</a>
-                        <h1>Employee Manipulation</h1>
+                        <a href="job_addition.php" class="button">+</a>
+                        <h1>Job Manipulation</h1>
 
                     </div><br/>
                     <div class="select-bar">
@@ -675,81 +673,185 @@
                                                     <input type="submit" name="Submit" value="Search"/>
                                                 </label>-->
                     </div>
+                    <div class="top-bar">
+                        
+                        <h2>Unassigned Jobs</h2>
+                        
+                    </div><br/>
                     <div class="table">
-                        <img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT job.id, `description`, `hours` FROM `job` where status='To Assign'";
+
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
                         <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
-                        <form action="employee_addition_action.php" method="POST">
-                            <table class="listing form" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <th class="full" colspan="2">Add Employee Details</th>
-                                </tr>
-                                <tr>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
 
-                                    <td class="first" width="172"><strong>Name</strong></td>
-                                    <td class="last"><input type="text" class="text" name="name"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Address</strong></td>
-                                    <td class="last"><textarea name="address" rows="4" cols="41"></textarea></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>DOB</strong></td>
-                                    <td class="last"><input type="text" class="text" name="dob"/></td>
-                                </tr>
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Username</strong></td>
-                                    <td class="last"><input type="text" class="text" name="username"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Passcode</strong></td>
-                                    <td class="last"><input type="password" class="text" name="passcode"/></td>
-                                </tr>
-
-                                <tr>
-
-                                    <td class="first" width="172"><strong>Mobile Number</strong></td>
-                                    <td class="last"><input type="text" class="text" name="mobile"/></td>
-                                    
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Email ID</strong></td>
-                                    <td class="last"><input type="text" class="text" name="email"/></td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"><strong>Designation</strong></td>
-                                    <td class="last">
-                                        <?php
-                                        include_once 'config.php';
-                                        $sql = "SELECT * FROM `designation`";
-
-                                        $result = $con->query($sql);
-                                        $count = mysqli_num_rows($result);
-                                        if ($count != 0) {
-                                            echo ' <select name="designation">';
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo ' 
-                                            <option value="' . $row['id'] . '">' . $row['description'] . '</option>
-                                        ';
-                                            }
-                                            echo ' 
-                                        </select>';
-                                        }
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr class="bg">
-                                    <td class="first"></td>
-                                    <td class="first">
-                                        <input type="submit" value="Submit"/></td>
-
-                                </tr>
+                                <th class="first">Job ID</th>
+                                <th  width="120">Description</th>
+                                <th class="first">Hours</th>
 
 
-                            </table>
-                        </form>
-                        <p>&nbsp;</p>
+
+
+                              
+                                <th></th>
+                                 <th></th>
+
+
+                                <th></th>
+                                <th class="last"></th>
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr class="bg">
+                                    <td class="first style2">' . $row['id'] . '</td>
+                       
+                                 <td class="first style2">' . $row['description'] . '</td>
+                                     <td class="first style2">' . $row['hours'] . '</td>
+                                      
+                                          
+                                
+                                <td><a href="job_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                <td><a href="job_assign.php?id=' . $row['id'] . '"><img src="img/add-icon.gif" width="16" height="16" alt="login"/></a></td>
+                              
+                                <td><a href="job_edit.php?id=' . $row['id'] . '"><img src="img/edit-icon.gif" width="16" height="16" alt="edit"/></a></td>
+                                <td><a href="job_delete_action.php?id=' . $row['id'] . '"><img src="img/hr.gif" width="16" height="16" alt=""/></a></td>
+                            </tr>';
+                            }
+                        }
+                        ?>
+
+
+
+
+                        </table>
+
                     </div>
+                    <div class="top-bar">
+                        
+                        <h2>Ongoing Jobs</h2>
+                        
+                    </div><br/>
+                    <div class="table">
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT job.id, `description`, `hours` FROM `job` where status='Going'";
+
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
+
+                                <th class="first">Job ID</th>
+                                <th  width="120">Description</th>
+                                <th class="first">Hours</th>
+
+
+
+
+                              
+                                <th></th>
+
+
+                                <th class="last"></th>
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr class="bg">
+                                    <td class="first style2">' . $row['id'] . '</td>
+                       
+                                 <td class="first style2">' . $row['description'] . '</td>
+                                     <td class="first style2">' . $row['hours'] . '</td>
+                                      
+                                          
+                                
+                                <td><a href="job_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                <td><a href="job_completion.php?id=' . $row['id'] . '"><img src="img/save-icon.gif" width="16" height="16" alt="edit"/></a></td>
+                                
+                            </tr>';
+                            }
+                        }
+                        ?>
+
+
+
+
+                        </table>
+
+                    </div>
+                    <div class="top-bar">
+                        
+                        <h2>Finished Jobs</h2>
+                        
+                    </div><br/>
+                    <div class="table">
+
+
+
+                        <?php
+                        include_once 'config.php';
+                        $sql = "SELECT job.id, `description`, `hours` FROM `job` where status='OK'";
+
+                        $result = $con->query($sql);
+                        $count = mysqli_num_rows($result);
+                        if ($count != 0) {
+
+                            echo '
+<img src="img/bg-th-left.gif" width="8" height="7" alt="" class="left"/>
+                        <img src="img/bg-th-right.gif" width="7" height="7" alt="" class="right"/>
+                        <table class="listing" cellpadding="0" cellspacing="0">                                    
+<tr>
+
+                                <th class="first">Job ID</th>
+                                <th  width="120">Description</th>
+                                <th class="first">Hours</th>
+
+
+
+
+                              
+                                
+                                <th class="last"></th>
+                            </tr>';
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo ' <tr class="bg">
+                                    <td class="first style2">' . $row['id'] . '</td>
+                       
+                                 <td class="first style2">' . $row['description'] . '</td>
+                                     <td class="first style2">' . $row['hours'] . '</td>
+                                      
+                                          
+                                
+                                <td><a href="job_view.php?id=' . $row['id'] . '"><img src="img/login-icon.gif" width="16" height="16" alt="login"/></a></td>
+                                
+                            </tr>';
+                            }
+                        }
+                        ?>
+
+
+
+
+                        </table>
+
+                    </div>
+
                 </div>
 
             </div>

@@ -647,13 +647,13 @@
             <div id="header">
                 <a href="index.html" class="logo"><img src="img/logo.gif" width="150" height="75" alt=""/></a>
 
-                
+
             </div>
             <div id="middle">
                 <div id="left-column">
 
                     <a href="#" class="link">Login</a>
-          
+
                 </div>
                 <div id="center-column">
 
